@@ -121,12 +121,18 @@ License: For each use you must have a valid license purchased only from above li
                                     <!--begin:Menu item-->
                                     <div class="menu-item">
                                         <!--begin:Menu link-->
-                                        <a class="menu-link active" href="#">
+                                        <a class="menu-link active" href="/filtroasig">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
                                             <span class="menu-title">Asignados</span>
                                         </a>
+                                        <a class="menu-link active" href="/usuarios/lista">
+											<span class="menu-bullet">
+												<span class="bullet bullet-dot"></span>
+											</span>
+											<span class="menu-title">Usuarios</span>
+										</a>
                                         <!--end:Menu link-->
                                     </div>
                                     <!--end:Menu item-->
@@ -1921,9 +1927,14 @@ License: For each use you must have a valid license purchased only from above li
                                         <!--end::Menu item-->
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-5">
-                                            <a href="../../demo9/dist/authentication/layouts/corporate/sign-in.html"
-                                                class="menu-link px-5">Sign Out</a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                @csrf
+                                            </form>
+                                            <a href="#" class="menu-link px-5" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                Sign Out
+                                            </a>
                                         </div>
+
                                         <!--end::Menu item-->
                                     </div>
                                     <!--end::User account menu-->
@@ -2035,8 +2046,8 @@ License: For each use you must have a valid license purchased only from above li
                             <div class="col-xl-4">
                                 <!--begin::Misc Widget 1-->
                                 <div class="row mb-5 mb-xl-8 g-5 g-xl-8">
-                                     <!--begin::Col-->
-                                     <div class="col-6">
+                                    <!--begin::Col-->
+                                    <div class="col-6">
                                         <!--begin::Card-->
                                         <div class="card card-stretch">
                                             <!--begin::Link-->
@@ -2170,8 +2181,8 @@ License: For each use you must have a valid license purchased only from above li
                                         <!--end::Card-->
                                     </div>
                                     <!--end::Col-->
-                                      <!--begin::Col-->
-                                      <div class="col-6">
+                                    <!--begin::Col-->
+                                    <div class="col-6">
                                         <!--begin::Card-->
                                         <div class="card card-stretch">
                                             <!--begin::Link-->
@@ -2240,38 +2251,38 @@ License: For each use you must have a valid license purchased only from above li
 
                                                             @for ($i = 0; $i < count($envios); $i++)
                                                                 @if ($envios[$i]->repartidor == Auth::user()->name)
-                                                                    <tr>
-                                                                        <td>{{ $envios[$i]->guia }}</td>
-                                                                        <td>{{ $envios[$i]->comercio }}</td>
-                                                                        <td>{{ $envios[$i]->destinatario }}</td>
-                                                                        <td>{{ $envios[$i]->fecha_entrega }}</td>
-                                                                        <td>$ {{ $envios[$i]->precio }}</td>
+                                                                <tr>
+                                                                    <td>{{ $envios[$i]->guia }}</td>
+                                                                    <td>{{ $envios[$i]->comercio }}</td>
+                                                                    <td>{{ $envios[$i]->destinatario }}</td>
+                                                                    <td>{{ $envios[$i]->fecha_entrega }}</td>
+                                                                    <td>$ {{ $envios[$i]->precio }}</td>
 
-                                                                        @php
-                                                                            $estadoColores = [
-                                                                                'En ruta' => '#F39C12', // Naranja
-                                                                                'Entregado' => '#2ECC71', // Verde
-                                                                                'Fallido' => '#E74C3C', // Rojo claro
-                                                                                'No entregado' => '#C0392B', // Rojo oscuro
-                                                                                'Reprogramado' => '#F1C40F', // Amarillo
-                                                                                'Cambio' => '#3498DB', // Azul
-                                                                            ];
+                                                                    @php
+                                                                    $estadoColores = [
+                                                                    'En ruta' => '#F39C12', // Naranja
+                                                                    'Entregado' => '#2ECC71', // Verde
+                                                                    'Fallido' => '#E74C3C', // Rojo claro
+                                                                    'No entregado' => '#C0392B', // Rojo oscuro
+                                                                    'Reprogramado' => '#F1C40F', // Amarillo
+                                                                    'Cambio' => '#3498DB', // Azul
+                                                                    ];
 
-                                                                            $estado = $envios[$i]->estado;
-                                                                            $color =
-                                                                                $estadoColores[$estado] ?? '#BDC3C7'; // Color por defecto si el estado no existe
-                                                                        @endphp
+                                                                    $estado = $envios[$i]->estado;
+                                                                    $color =
+                                                                    $estadoColores[$estado] ?? '#BDC3C7'; // Color por defecto si el estado no existe
+                                                                    @endphp
 
-                                                                        <td class="text-center">
-                                                                            <a href="#"
-                                                                                class="btn hover-scale"
-                                                                                style="background-color: {{ $color }}; color: white; margin: 5px;">
-                                                                                {{ $estado }}
-                                                                            </a>
-                                                                        </td>
-                                                                    </tr>
+                                                                    <td class="text-center">
+                                                                        <a href="#"
+                                                                            class="btn hover-scale"
+                                                                            style="background-color: {{ $color }}; color: white; margin: 5px;">
+                                                                            {{ $estado }}
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
                                                                 @endif
-                                                            @endfor
+                                                                @endfor
 
 
                                                         </tbody>

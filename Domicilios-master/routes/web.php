@@ -3,7 +3,7 @@
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\UploadController;
@@ -56,6 +56,17 @@ Route::get('/guardaruser', [App\Http\Controllers\UsuarioController::class, 'guar
 
 Route::post('/upload', [UploadController::class, 'upload'])->name('upload');
 Route::post('/cambiar-estado', [EnvioController::class, 'cambiarEstado'])->name('cambiar.estado');
+
+
+
+Route::post('/logout', function () {
+    Auth::logout();
+    session()->invalidate();
+    session()->regenerateToken();
+    
+    return redirect('/login');
+})->name('logout');
+
 
 
 require __DIR__.'/auth.php';

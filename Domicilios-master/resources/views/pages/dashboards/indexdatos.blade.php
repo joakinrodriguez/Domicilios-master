@@ -125,12 +125,18 @@ License: For each use you must have a valid license purchased only from above li
                                     <!--begin:Menu item-->
                                     <div class="menu-item">
                                         <!--begin:Menu link-->
-                                        <a class="menu-link active" href="#">
+                                        <a class="menu-link active" href="/filtroasig">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
                                             <span class="menu-title">Asignados</span>
                                         </a>
+                                        <a class="menu-link active" href="/usuarios/lista">
+											<span class="menu-bullet">
+												<span class="bullet bullet-dot"></span>
+											</span>
+											<span class="menu-title">Usuarios</span>
+										</a>
                                         <!--end:Menu link-->
                                     </div>
                                     <!--end:Menu item-->
@@ -147,18 +153,18 @@ License: For each use you must have a valid license purchased only from above li
                                 data-kt-menu-placement="right-start" class="menu-item here show py-2">
                                 <!--begin:Menu link-->
                                 @can('repartidor-crear')
-                                    <a href="/usuarios/lista">
-                                        <span class="menu-link menu-center">
-                                            <span class="menu-icon me-0">
-                                                <i class="ki-duotone ki-badge fs-2x">
-                                                    <span class="path1"></span>
-                                                    <span class="path2"></span>
-                                                    <span class="path3"></span>
-                                                    <span class="path4"></span>
-                                                    <span class="path5"></span>
-                                                </i>
-                                            </span>
+                                <a href="/usuarios/lista">
+                                    <span class="menu-link menu-center">
+                                        <span class="menu-icon me-0">
+                                            <i class="ki-duotone ki-badge fs-2x">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                                <span class="path3"></span>
+                                                <span class="path4"></span>
+                                                <span class="path5"></span>
+                                            </i>
                                         </span>
+                                    </span>
                                     @endcan
 
 
@@ -1927,9 +1933,14 @@ License: For each use you must have a valid license purchased only from above li
                                         <!--end::Menu item-->
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-5">
-                                            <a href="../../demo9/dist/authentication/layouts/corporate/sign-in.html"
-                                                class="menu-link px-5">Sign Out</a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                @csrf
+                                            </form>
+                                            <a href="#" class="menu-link px-5" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                Sign Out
+                                            </a>
                                         </div>
+
                                         <!--end::Menu item-->
                                     </div>
                                     <!--end::User account menu-->
@@ -2041,50 +2052,50 @@ License: For each use you must have a valid license purchased only from above li
                             <div class="col-xl-4">
                                 <div class="row mb-5 mb-xl-8 g-5 g-xl-8">
                                     @php
-                                        $routes = [
-                                            'dashboard'         => 'Dashboard',
-                                            'filtroasig'        => 'Asignados',
-                                            'filtroruta'        => 'En ruta',
-                                            'filtroentregado'   => 'Entregados',
-                                            'filtrofallido'     => 'Fallidos',
-                                            'filtronoentregado' => 'No entregados',
-                                            'filtroreprogramado'=> 'Reprogramados',
-                                            'filtrocambio'      => 'Cambios',
-                                        ];
-                            
-                                        $icons = [
-                                            'dashboard'         => 'ki-gift',
-                                            'filtroasig'        => 'ki-gift',
-                                            'filtroruta'        => 'ki-technology-2',
-                                            'filtroentregado'   => 'ki-fingerprint-scanning',
-                                            'filtrofallido'     => 'ki-abstract-26',
-                                            'filtronoentregado' => 'ki-basket',
-                                            'filtroreprogramado'=> 'ki-rocket',
-                                            'filtrocambio'      => 'ki-gift',
-                                        ];
+                                    $routes = [
+                                    'dashboard' => 'Dashboard',
+                                    'filtroasig' => 'Asignados',
+                                    'filtroruta' => 'En ruta',
+                                    'filtroentregado' => 'Entregados',
+                                    'filtrofallido' => 'Fallidos',
+                                    'filtronoentregado' => 'No entregados',
+                                    'filtroreprogramado'=> 'Reprogramados',
+                                    'filtrocambio' => 'Cambios',
+                                    ];
+
+                                    $icons = [
+                                    'dashboard' => 'ki-gift',
+                                    'filtroasig' => 'ki-gift',
+                                    'filtroruta' => 'ki-technology-2',
+                                    'filtroentregado' => 'ki-fingerprint-scanning',
+                                    'filtrofallido' => 'ki-abstract-26',
+                                    'filtronoentregado' => 'ki-basket',
+                                    'filtroreprogramado'=> 'ki-rocket',
+                                    'filtrocambio' => 'ki-gift',
+                                    ];
                                     @endphp
-                            
+
                                     @foreach ($routes as $route => $label)
-                                        <div class="col-6">
-                                            <div class="card card-stretch">
-                                                <a href="/{{ $route }}"
-                                                   class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10 
+                                    <div class="col-6">
+                                        <div class="card card-stretch">
+                                            <a href="/{{ $route }}"
+                                                class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10 
                                                        {{ Request::is($route) ? 'text-primary' : 'text-gray-800' }}">
-                                                    <i class="ki-duotone {{ $icons[$route] }} fs-2tx mb-5 ms-n1 
+                                                <i class="ki-duotone {{ $icons[$route] }} fs-2tx mb-5 ms-n1 
                                                        {{ Request::is($route) ? 'text-primary' : 'text-gray-400' }}">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                        <span class="path3"></span>
-                                                        <span class="path4"></span>
-                                                    </i>
-                                                    <span class="fs-4 fw-bold">{{ $label }}</span>
-                                                </a>
-                                            </div>
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                    <span class="path4"></span>
+                                                </i>
+                                                <span class="fs-4 fw-bold">{{ $label }}</span>
+                                            </a>
                                         </div>
+                                    </div>
                                     @endforeach
                                 </div>
                             </div>
-                            
+
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-xl-7 ps-xl-4">
@@ -2096,36 +2107,36 @@ License: For each use you must have a valid license purchased only from above li
                                         <h3 class="card-title align-items-start flex-column">
                                             <span class="card-label fw-bold fs-3 mb-1 text-gray-600 text-uppercase">
                                                 @switch(Route::currentRouteName())
-                                                    @case('filtroasig')
-                                                        ENVIOS ASIGNADOS
-                                                        @break
-                                    
-                                                    @case('filtroruta')
-                                                        ENVIOS EN RUTA
-                                                        @break
-                                    
-                                                    @case('filtroentregados')
-                                                        ENVIOS ENTREGADOS
-                                                        @break
-                                    
-                                                    @case('filtrofallido')
-                                                        ENVIOS FALLIDOS
-                                                        @break
-                                    
-                                                    @case('filtronoentregado')
-                                                        ENVIOS NO ENTREGADOS
-                                                        @break
-                                    
-                                                    @case('filtroreprogramado')
-                                                        ENVIOS REPROGRAMADOS
-                                                        @break
-                                    
-                                                    @case('filtrocambio')
-                                                        ENVIOS CON CAMBIO
-                                                        @break
-                                    
-                                                    @default
-                                                        ENVIOS
+                                                @case('filtroasig')
+                                                ENVIOS ASIGNADOS
+                                                @break
+
+                                                @case('filtroruta')
+                                                ENVIOS EN RUTA
+                                                @break
+
+                                                @case('filtroentregados')
+                                                ENVIOS ENTREGADOS
+                                                @break
+
+                                                @case('filtrofallido')
+                                                ENVIOS FALLIDOS
+                                                @break
+
+                                                @case('filtronoentregado')
+                                                ENVIOS NO ENTREGADOS
+                                                @break
+
+                                                @case('filtroreprogramado')
+                                                ENVIOS REPROGRAMADOS
+                                                @break
+
+                                                @case('filtrocambio')
+                                                ENVIOS CON CAMBIO
+                                                @break
+
+                                                @default
+                                                ENVIOS
                                                 @endswitch
                                             </span>
                                             <span class="text-muted mt-1 fw-semibold fs-7">
@@ -2134,24 +2145,24 @@ License: For each use you must have a valid license purchased only from above li
                                         </h3>
                                     </div>
                                     <!--end::Header-->
-                            
+
                                     <!--begin::Body-->
 
                                     <div class="card-body py-3">
                                         <div class="table-responsive" style="overflow-x: auto; padding: 0;">
-                                    
+
                                             <!--begin::Main wrapper-->
                                             <div id="kt_docs_search_handler_basic"
                                                 data-kt-search-keypress="true"
                                                 data-kt-search-min-length="2"
                                                 data-kt-search-enter="true"
                                                 data-kt-search-layout="inline">
-                                    
+
                                                 <!--begin::Input Form-->
                                                 <form data-kt-search-element="form" class="w-50 position-relative mb-5" autocomplete="off">
-                                                    <input type="hidden"/>
+                                                    <input type="hidden" />
 
-                                                     <!--begin::Icon (Font Awesome)-->
+                                                    <!--begin::Icon (Font Awesome)-->
                                                     <span class="position-absolute top-50 start-0 translate-middle-y ps-5 text-gray-500">
                                                         <i class="fa-solid fa-magnifying-glass"></i>
                                                     </span>
@@ -2161,12 +2172,12 @@ License: For each use you must have a valid license purchased only from above li
                                                         name="search"
                                                         value=""
                                                         placeholder="Buscar..."
-                                                        data-kt-search-element="input" id="customSearch"/>
-                                    
+                                                        data-kt-search-element="input" id="customSearch" />
+
                                                     <span class="position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-5" data-kt-search-element="spinner">
                                                         <span class="spinner-border h-15px w-15px align-middle text-gray-500"></span>
                                                     </span>
-                                    
+
                                                     <span class="btn btn-flush btn-active-color-primary position-absolute top-50 end-0 translate-middle-y lh-0 me-5 d-none"
                                                         data-kt-search-element="clear" id="clearSearch">
                                                         &#10006;
@@ -2174,99 +2185,104 @@ License: For each use you must have a valid license purchased only from above li
                                                 </form>
                                             </div>
                                             <!--end::Main wrapper-->
-                                    
+
                                             <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable" id="envios_table" style="width: 100%; table-layout: auto; overflow-x: hidden;">
                                                 <thead>
                                                     <tr class="text-start text-gray-600 fw-bold fs-7 text-uppercase gs-0">
                                                         <th class="min-w-100px">GUIA</th>
                                                         <th class="min-w-100px">COMERCIO</th>
                                                         <th class="min-w-100px">DESTINATARIO</th>
-                                                
+
                                                         @if (Route::currentRouteName() !== 'filtroreprogramado')
-                                                            <th class="min-w-100px">FECHA</th> <!-- Solo visible si NO es filtroreprogramado -->
+                                                        <th class="min-w-100px">FECHA</th> <!-- Solo visible si NO es filtroreprogramado -->
                                                         @endif
-                                                
+
                                                         @if (Route::currentRouteName() === 'filtroreprogramado')
-                                                            <th class="min-w-150px">FECHA REPROGRAMADO</th> <!-- Solo visible en filtroreprogramado -->
+                                                        <th class="min-w-150px">FECHA REPROGRAMADO</th> <!-- Solo visible en filtroreprogramado -->
                                                         @endif
-                                                
+
                                                         <th class="text-end min-w-75px">PRECIO</th>
                                                         <th class="text-center min-w-100px">ESTADO</th>
                                                     </tr>
                                                 </thead>
-                                                
+
                                                 <tbody class="fw-semibold text-gray-600">
                                                     @php
-                                                        $estadoColores = [
-                                                            'En ruta' => '#F39C12',
-                                                            'Entregado' => '#2ECC71',
-                                                            'Fallido' => '#E74C3C',
-                                                            'No entregado' => '#C0392B',
-                                                            'Reprogramado' => '#F1C40F',
-                                                            'Cambio' => '#3498DB'
-                                                        ];
+                                                    $estadoColores = [
+                                                    'En ruta' => '#F39C12',
+                                                    'Entregado' => '#2ECC71',
+                                                    'Fallido' => '#E74C3C',
+                                                    'No entregado' => '#C0392B',
+                                                    'Reprogramado' => '#F1C40F',
+                                                    'Cambio' => '#3498DB'
+                                                    ];
                                                     @endphp
-                                                
+
                                                     @foreach ($envios as $envio)
-                                                        @if ($envio->repartidor == Auth::user()->name)
-                                                            @php
-                                                                $estado = $envio->estado;
-                                                                $color = $estadoColores[$estado] ?? '#BDC3C7';
-                                                            @endphp
-                                                
-                                                            <tr>
-                                                                <td><a href="/detalles/{{ $envio->guia }}" class="text-gray-600 text-hover-primary">{{ $envio->guia }}</a></td>
-                                                                <td>{{ $envio->comercio }}</td>
-                                                                <td>{{ $envio->destinatario }}</td>
-                                                
-                                                                @if (Route::currentRouteName() !== 'filtroreprogramado')
-                                                                    <td data-order="{{ $envio->fecha_entrega }}">
-                                                                        {{ date('d M Y, h:i a', strtotime($envio->fecha_entrega)) }}
-                                                                    </td>
-                                                                @endif
-                                                
-                                                                @if (Route::currentRouteName() === 'filtroreprogramado')
-                                                                    <td data-order="{{ $envio->fecha_reprogramado }}">
-                                                                        @if ($envio->fecha_reprogramado)
-                                                                            {{ date('d M Y', strtotime($envio->fecha_reprogramado)) }}
-                                                                        @else
-                                                                            -
-                                                                        @endif
-                                                                    </td>
-                                                                @endif
-                                                
-                                                                <td class="text-end">${{ number_format($envio->precio, 2) }}</td>
-                                                                <td class="text-center">
-                                                                    <span class="badge" style="background-color: {{ $color }}; color: white; padding: 8px 8px; border-radius: 6px;">{{ $estado }}</span>
-                                                                </td>
-                                                            </tr>
+                                                    @if ($envio->repartidor == Auth::user()->name)
+                                                    @php
+                                                    $estado = $envio->estado;
+                                                    $color = $estadoColores[$estado] ?? '#BDC3C7';
+                                                    @endphp
+
+                                                    <tr>
+                                                        <td><a href="/detalles/{{ $envio->guia }}" class="text-gray-600 text-hover-primary">{{ $envio->guia }}</a></td>
+                                                        <td>{{ $envio->comercio }}</td>
+                                                        <td>{{ $envio->destinatario }}</td>
+
+                                                        @if (Route::currentRouteName() !== 'filtroreprogramado')
+                                                        <td data-order="{{ $envio->fecha_entrega }}">
+                                                            {{ date('d M Y, h:i a', strtotime($envio->fecha_entrega)) }}
+                                                        </td>
                                                         @endif
+
+                                                        @if (Route::currentRouteName() === 'filtroreprogramado')
+                                                        <td data-order="{{ $envio->fecha_reprogramado }}">
+                                                            @if ($envio->fecha_reprogramado)
+                                                            {{ date('d M Y', strtotime($envio->fecha_reprogramado)) }}
+                                                            @else
+                                                            -
+                                                            @endif
+                                                        </td>
+                                                        @endif
+
+                                                        <td class="text-end">${{ number_format($envio->precio, 2) }}</td>
+                                                        <td class="text-center">
+                                                            <span class="badge" style="background-color: {{ $color }}; color: white; padding: 8px 8px; border-radius: 6px;">{{ $estado }}</span>
+                                                        </td>
+                                                    </tr>
+                                                    @endif
                                                     @endforeach
                                                 </tbody>
-                                                
-                                                
+
+
                                             </table>
-                                    
+
                                             <style>
                                                 #envios_table {
                                                     width: 100% !important;
                                                     table-layout: auto;
                                                     overflow-x: hidden;
                                                 }
+
                                                 .table-responsive {
                                                     overflow-x: auto;
                                                     -webkit-overflow-scrolling: touch;
                                                 }
-                                                .dataTables_info, .dataTables_filter {
+
+                                                .dataTables_info,
+                                                .dataTables_filter {
                                                     display: none !important;
                                                 }
-                                                table.dataTable.no-footer, .dataTables_scrollBody {
+
+                                                table.dataTable.no-footer,
+                                                .dataTables_scrollBody {
                                                     border-bottom: none !important;
                                                 }
                                             </style>
-                                    
+
                                         </div>
-                                    
+
                                         <script>
                                             $(document).ready(function() {
                                                 var table = $('#envios_table').DataTable({
@@ -2298,15 +2314,14 @@ License: For each use you must have a valid license purchased only from above li
                                                     }
                                                 });
                                             });
-
                                         </script>
                                     </div>
-                                                                      
+
                                     <!--end::Body-->
                                 </div>
                                 <!--end::Engage widget 1-->
 
-                            </div>                       
+                            </div>
                         </div>
 
                     </div>
@@ -2314,7 +2329,7 @@ License: For each use you must have a valid license purchased only from above li
                 </div>
                 <!--end::Content-->
                 <!--begin::Footer-->
-              {{--   <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
+                {{-- <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
                     <!--begin::Container-->
                     <div class="container-fluid d-flex flex-column flex-md-row flex-stack">
                         <!--begin::Copyright-->
