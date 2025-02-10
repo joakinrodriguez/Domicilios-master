@@ -11,14 +11,14 @@ class EnvioController extends Controller
     public function cambiarEstado(Request $request)
     {
         $request->validate([
-            'guia' => 'required|string|exists:envios,guia', // Validar la existencia de la guía
+            'guia' => 'required|string|exists:envios,guia', 
             'estado' => 'required|string',
             'nota' => 'nullable|string',
             'nota_repartidor' => 'nullable|string',
             'fecha_reprogramado' => 'nullable|date_format:Y-m-d'
         ]);
 
-        $envio = Envio::where('guia', $request->guia)->firstOrFail(); // Buscar por guía
+        $envio = Envio::where('guia', $request->guia)->firstOrFail(); 
         $envio->estado = $request->estado;
         $envio->nota = $request->nota;
         $envio->nota_repartidor = $request->nota_repartidor;
